@@ -5,12 +5,12 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var inventoryRouter = require('./routes/inventory');
 
 var app = express();
 
 const mongoose = require("mongoose");
-const mongoDB = "mongodb+srv://tyerooth:Sharky123@cluster0.4zmmfw1.mongodb.net/?retryWrites=true&w=majority";
+const mongoDB = "mongodb+srv://tyerooth:KjRBqk12EhFiXMXO@cluster0.uyzq1fl.mongodb.net/?retryWrites=true&w=majority";
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
@@ -26,7 +26,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use("/inventory", inventoryRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
