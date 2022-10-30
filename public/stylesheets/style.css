@@ -90,6 +90,14 @@ nav {
   text-decoration: none;
 }
 
+.detail-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.2rem;
+  padding: 20px;
+}
+
 .shadow {
   box-shadow:
     0 1px 1px hsl(0deg 0% 0% / 0.075),

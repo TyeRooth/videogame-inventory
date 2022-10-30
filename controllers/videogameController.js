@@ -53,8 +53,21 @@ exports.videogame_list = function (req, res, next) {
     });
 };
 
-exports.videogame_detail = (req, res) => {
-    res.send("Not Implemented: videogame detail");
+exports.videogame_detail = function (req, res, next) {
+    Videogame.findById(req.params.id).populate("console").populate("genre").exec((err, result) => {
+        if (err) {
+            return next(err);
+        }
+        if (result == null) {
+            const err = new Error ("Videogame not found");
+            err.status = 404;
+            return next(err);
+        }
+        res.render("videogame_detail", {
+            title: result.name,
+            data: result,
+        });
+    });
 };
 
 exports.videogame_create_get = (req, res) => {

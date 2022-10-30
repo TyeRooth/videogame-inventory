@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <header>
+      <%- include("./header") %> 
+    </header>
+    <section class="detail-section">
+        <h1 class="page-heading"><%= title %></h1>
+        <div class="detail-info-container">
+            <p class="detail-info"><%= data.stock %> copies of game available</p>
+            <p class="detail-info">Price: $<%= data.price %></p>
+            <p class="detail-info">Release Date: <%= data.release_date_formatted %></p>
+            <p class="detail-info">ESRB Rating: <%= data.ESRB %></p>
+            <div class="detail-links-container">
+                <h2 class="detail-links-heading">Genre</h2>
+                <% for (let i = 0; i < data.genre.length; i++) { %>
+                    <a href=<%= data.genre[i].url %> class="detail-link"><%= data.genre[i].name %></a>
+                <% } %>
+            </div>
+            <div class="detail-links-container">
+                <h2 class="detail-links-heading">Consoles</h2>
+                <% for (let i = 0; i < data.console.length; i++) { %>
+                    <a href=<%= data.console[i].url %> class="detail-link"><%= data.console[i].name %></a>
+                <% } %>
+            </div>
+        </div>
+    </section>
+  </body>
+</html>
