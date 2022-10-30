@@ -1,7 +1,17 @@
 const Console = require("../models/console");
 
-exports.console_list = (req, res) => {
-    res.send("Not Implemented: console list");
+const async = require('async');
+
+exports.console_list = function(req, res, next) {
+    Console.find({}, "name stock").sort({ name: 1 }).exec((err, results) => {
+        if (err) {
+            return next(err);
+        }
+        res.render("console_list", {
+            title: "Console List",
+            console_list: results,
+        });
+    });
 };
 
 exports.console_detail = (req, res) => {

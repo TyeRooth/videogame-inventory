@@ -4,7 +4,7 @@ const Genre = require('../models/genre');
 
 const async = require('async');
 
-exports.index = (req, res) => {
+exports.index = function (req, res, next) {
     async.parallel(
         {
             videogame_count(callback) {
@@ -21,6 +21,9 @@ exports.index = (req, res) => {
             },
         },
         (err, results) => {
+            if (err) {
+                return next(err);
+            }
             // Sum stocks together for all videogames
             results.total_stock = 0;
             if (results.videogames) {
@@ -28,7 +31,7 @@ exports.index = (req, res) => {
                     results.total_stock += results.videogames[i].stock;
                 }
             };
-            
+
             res.render("index", {
                 title: "Videogame Inventory Summary",
                 error: err,
@@ -38,8 +41,16 @@ exports.index = (req, res) => {
     );
 };
 
-exports.videogame_list = (req, res) => {
-    res.send("Not Implemented: videogame list");
+exports.videogame_list = function (req, res, next) {
+    Videogame.find({}, "name stock").sort({ name: 1 }).exec((err, results) => {
+        if (err) {
+            return next(err);
+        }
+        res.render("videogame_list", {
+            title: "Videogame List",
+            videogame_list: results,
+        });
+    });
 };
 
 exports.videogame_detail = (req, res) => {

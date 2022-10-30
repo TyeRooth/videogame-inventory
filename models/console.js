@@ -10,7 +10,7 @@ const ConsoleSchema = new Schema ({
 });
 
 ConsoleSchema.virtual("url").get(function () {
-    return `inventory/console/${ this._id }`;
+    return `/inventory/console/${ this._id }`;
 });
 
 module.exports = mongoose.model("Console", ConsoleSchema);

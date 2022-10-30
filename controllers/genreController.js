@@ -1,7 +1,17 @@
 const Genre = require("../models/genre");
 
-exports.genre_list = (req, res) => {
-    res.send("Not Implemented: genre list")
+const async = require('async');
+
+exports.genre_list = function (req, res, next) {
+    Genre.find().sort({ name: 1 }).exec((err, results) => {
+        if (err) {
+            return next(err);
+        }
+        res.render("genre_list", {
+            title: "Genre List",
+            genre_list: results,
+        });
+    });
 };
 
 exports.genre_detail = (req, res) => {

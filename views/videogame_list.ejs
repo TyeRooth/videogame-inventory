@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <header>
+      <%- include("./header") %> 
+    </header>
+    <section class="list-section">
+        <h1 class="page-heading"><%= title %></h1>
+        <p class="list-caption-help">Name - Quantity in Stock</p>
+        <div class="list-container">
+            <% for (let i = 0; i < videogame_list.length; i++) { %>
+                <a href=<%= videogame_list[i].url %> class="list-detail-link">
+                    <div class="list-item-container shadow">
+                        <p class="list-caption"><%= videogame_list[i].name %> - <%= videogame_list[i].stock %></p>
+                    </div>
+                </a>
+            <% } %>
+        </div>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <header>
+      <%- include("./header") %> 
+    </header>
+    <section class="list-section">
+        <h1 class="page-heading"><%= title %></h1>
+        <div class="list-container">
+            <% for (let i = 0; i < genre_list.length; i++) { %>
+                <a href=<%= genre_list[i].url %> class="list-detail-link">
+                    <div class="list-item-container shadow">
+                        <p class="list-caption"><%= genre_list[i].name %></p>
+                    </div>
+                </a>
+            <% } %>
+        </div>
+    </section>
+  </body>
+</html>
