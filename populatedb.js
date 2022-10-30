@@ -44,8 +44,8 @@ function videogameCreate(name, price, stock, ESRB, releaseDate, genres, consoles
     });
 }
 
-function consoleCreate(name, releaseYear, price, cb) {
-    consoledetail = { name: name, releaseYear: releaseYear, price: price };
+function consoleCreate(name, releaseYear, price, stock, cb) {
+    consoledetail = { name: name, releaseYear: releaseYear, price: price, stock: stock };
     const thisconsole = new Console(consoledetail);
 
     thisconsole.save(function (err) {
@@ -76,22 +76,22 @@ function genreCreate(name, cb) {
 function createGenreConsoles(cb) {
     async.series([
         function(callback) {
-            consoleCreate('Xbox 360', '2005', 99.99, callback);
+            consoleCreate('Xbox 360', '2005', 99.99, 44, callback);
         },
         function(callback) {
-            consoleCreate('PS3', '2006', 109.99, callback);
+            consoleCreate('PS3', '2006', 109.99, 56, callback);
         },
         function(callback) {
-            consoleCreate('Wii', '2006', 59.99, callback);
+            consoleCreate('Wii', '2006', 59.99, 13, callback);
         },
         function(callback) {
-            consoleCreate('Xbox One', '2013', 399.99, callback);
+            consoleCreate('Xbox One', '2013', 399.99, 212, callback);
         },
         function(callback) {
-            consoleCreate('PS4', '2013', 379.99, callback)
+            consoleCreate('PS4', '2013', 379.99, 350, callback)
         },
         function(callback) {
-            consoleCreate('Switch', '2017', 399.99, callback);
+            consoleCreate('Switch', '2017', 399.99, 32, callback);
         },
         function(callback) {
             genreCreate('Role-Playing', callback);

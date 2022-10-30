@@ -1,8 +1,40 @@
 const Videogame = require('../models/videogame');
+const Console = require('../models/console');
+const Genre = require('../models/genre');
+
+const async = require('async');
 
 exports.index = (req, res) => {
-    res.send("Not Implemented: Inventory Home");
-};''
+    async.parallel(
+        {
+            videogame_count(callback) {
+                Videogame.countDocuments({}, callback);
+            },
+            videogames(callback) {
+                Videogame.find({}, callback);
+            },
+            console_count(callback) {
+                Console.countDocuments({}, callback);
+            },
+            genre_count(callback) {
+                Genre.countDocuments({}, callback);
+            },
+        },
+        (err, results) => {
+            results.total_stock = 0;
+            if (results.videogames) {
+                for (let i = 0; i < results.videogames.length; i++) {
+                    results.total_stock += videogames[i].stock;
+                }
+            };
+            res.render("index", {
+                title: "Videogame Inventory Home",
+                error: err,
+                data: results,
+            });
+        }
+    );
+};
 
 exports.videogame_list = (req, res) => {
     res.send("Not Implemented: videogame list");
