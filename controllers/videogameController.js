@@ -21,14 +21,16 @@ exports.index = (req, res) => {
             },
         },
         (err, results) => {
+            // Sum stocks together for all videogames
             results.total_stock = 0;
             if (results.videogames) {
                 for (let i = 0; i < results.videogames.length; i++) {
-                    results.total_stock += videogames[i].stock;
+                    results.total_stock += results.videogames[i].stock;
                 }
             };
+            
             res.render("index", {
-                title: "Videogame Inventory Home",
+                title: "Videogame Inventory Summary",
                 error: err,
                 data: results,
             });

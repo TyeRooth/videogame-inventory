@@ -8,8 +8,12 @@
     <header>
       <%- include("./header") %> 
     </header>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <p>Testing this out</p>
+    <section class="summary-section">
+      <h1><%= title %></h1>
+      <p class="summary-info">Unique videogames in inventory: <%= data.videogame_count %></p>
+      <p class="summary-info">Total stock in inventory: <%= data.total_stock %></p>
+      <p class="summary-info">Unique consoles in inventory: <%= data.console_count %></p>
+      <p class="summary-info">Unique genres of games in inventory: <%= data.genre_count %></p>
+    </section>
   </body>
 </html>
