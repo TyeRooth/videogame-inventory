@@ -10,6 +10,9 @@
     </header>
     <section class="list-section">
         <h1 class="page-heading"><%= title %></h1>
+        <div class="create-link-container">
+          <a href="/inventory/genre/create" class="create-link">Add New Genre +</a>
+        </div>
         <div class="list-container">
             <% for (let i = 0; i < genre_list.length; i++) { %>
                 <a href=<%= genre_list[i].url %> class="list-detail-link">

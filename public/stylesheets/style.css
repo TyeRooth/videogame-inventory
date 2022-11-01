@@ -43,6 +43,8 @@ nav {
   transition: all .2s ease-in-out;
 }
 
+/* Home Page */
+
 .summary-section {
   display: flex;
   flex-direction: column;
@@ -59,8 +61,23 @@ nav {
   text-align: center;
 }
 
+/* List Pages */
+
 .list-section {
   padding: 20px;
+}
+
+.create-link-container {
+  text-align: center;
+  margin: 30px;
+}
+
+.create-link {
+  background-color: green;
+  color: white;
+  text-decoration: none;
+  border-radius: 20px;
+  padding: 10px;
 }
 
 .list-caption-help {
@@ -71,6 +88,7 @@ nav {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 10px;
+  width: 100%;
 }
 
 .list-item-container {
@@ -90,6 +108,8 @@ nav {
   text-decoration: none;
 }
 
+/* Detail Pages */
+
 .detail-section {
   display: flex;
   flex-direction: column;
@@ -97,6 +117,41 @@ nav {
   font-size: 1.2rem;
   padding: 20px;
 }
+
+.console-detail-info {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.game-edit-container {
+  padding-top: 30px;
+}
+
+.edit-link {
+  text-decoration: none;
+}
+
+.update-link-button,
+.delete-link-button {
+  border-radius: 20px;
+  padding: 10px;
+  color: white;
+  font-size: 1.2rem;
+  margin: 10px;
+  border: none;
+}
+
+.update-link-button {
+  background-color: blue;
+}
+
+.delete-link-button {
+  background-color: red;
+}
+
+/* Misc */
 
 .shadow {
   box-shadow:

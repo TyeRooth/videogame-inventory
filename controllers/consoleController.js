@@ -1,4 +1,5 @@
 const Console = require("../models/console");
+const Videogame = require("../models/videogame");
 
 const async = require('async');
 
@@ -14,8 +15,32 @@ exports.console_list = function(req, res, next) {
     });
 };
 
-exports.console_detail = (req, res) => {
-    res.send("Not Implemented: console detail");
+exports.console_detail = function (req, res, next) {
+    async.parallel(
+        {
+            console(callback) {
+                Console.findById(req.params.id).exec(callback);
+            },
+            console_games(callback) {
+                Videogame.find({ console: req.params.id }).exec(callback);
+            },
+        },
+        (err, results) => {
+            if (err) {
+                return next(err);
+            }
+            if (results.console == null) {
+                const err = new Error("Console not found");
+                err.status = 404;
+                return next(err);
+            }
+            res.render("console_detail", {
+                title: results.console.name,
+                console: results.console,
+                videogame_list: results.console_games,
+            });
+        }
+    );
 };
 
 exports.console_create_get = (req, res) => {

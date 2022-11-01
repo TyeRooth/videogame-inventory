@@ -10,6 +10,9 @@
     </header>
     <section class="list-section">
         <h1 class="page-heading"><%= title %></h1>
+        <div class="create-link-container">
+          <a href="/inventory/console/create" class="create-link">Add New Console +</a>
+        </div>
         <p class="list-caption-help">Name - Quantity in Stock</p>
         <div class="list-container">
             <% for (let i = 0; i < console_list.length; i++) { %>

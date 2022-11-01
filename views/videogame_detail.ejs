@@ -27,6 +27,12 @@
                     <a href=<%= data.console[i].url %> class="detail-link"><%= data.console[i].name %></a>
                 <% } %>
             </div>
+            <a href=<%= "/inventory/videogame/" + data._id + "/update" %> class="edit-link">
+              <button class="update-link-button" style="margin-top:30px">Update Game</button>
+            </a>
+            <a href=<%= "/inventory/videogame/" + data._id + "/delete" %> class="edit-link">
+              <button class="delete-link-button">Delete Game</button>
+            </a>
         </div>
     </section>
   </body>

@@ -8,12 +8,17 @@
     <header>
       <%- include("./header") %> 
     </header>
-    <section class="list-section">
+    <section class="detail-section">
         <h1 class="page-heading"><%= title %></h1>
-        <div class="create-link-container">
-          <a href="/inventory/videogame/create" class="create-link">Add New Videogame +</a>
+        <div class="console-detail-info">
+            <a href=<%= "/inventory/genre/" + genre._id + "/update" %> class="edit-link">
+                <button class="update-link-button">Update Genre</button>
+              </a>
+              <a href=<%= "/inventory/genre/" + genre._id + "/delete" %> class="edit-link">
+                <button class="delete-link-button">Delete Genre</button>
+              </a>
         </div>
-        <p class="list-caption-help">Name - Quantity in Stock</p>
+        <h2>Games for this Genre</h2>
         <div class="list-container">
             <% for (let i = 0; i < videogame_list.length; i++) { %>
                 <a href=<%= videogame_list[i].url %> class="list-detail-link">
