@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <header>
+      <%- include("./header") %> 
+    </header>
+    <section class="delete-section">
+        <h1 class="page-heading"><%= title %></h1>
+        <p>Do you really want to delete this videogame?</p>
+        <form method="post" action="">
+            <div class="form-item">
+                <input id="videogameid" type="hidden", name="videogameid", required="true", value=<%= videogame._id %> >
+            </div>
+            <button class="delete-button">Delete</button>
+            <a href=<%= videogame.url %> class="cancel-link">
+                <button class="cancel-delete-button" type="button">Cancel</button>
+            </a>
+        </form>
+    </section>
+  </body>
+</html>

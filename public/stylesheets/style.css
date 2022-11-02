@@ -141,6 +141,7 @@ nav {
   font-size: 1.2rem;
   margin: 10px;
   border: none;
+  cursor: pointer;
 }
 
 .update-link-button {
@@ -149,6 +150,62 @@ nav {
 
 .delete-link-button {
   background-color: red;
+}
+
+/* Form */
+.form-section {
+  padding: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.form-item {
+  width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.check-heading {
+  text-align: center;
+}
+
+.form-button {
+  margin-top: 20px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 8px;
+  font-size: 2rem;
+  padding: 10px;
+}
+
+.form-button:hover {
+  background-color: lightgray;
+}
+
+/* Delete */
+.delete-section {
+  font-size: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.delete-button {
+  border-radius: 20px;
+  padding: 10px;
+  color: white;
+  font-size: 1.2rem;
+  margin: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: red;
+  width: 300px;
 }
 
 /* Misc */
@@ -164,7 +221,7 @@ nav {
 }
 
 @media (max-width: 1000px) {
-  header {
+  nav {
     flex-direction: column;
     align-items: center;
   }
@@ -173,6 +230,8 @@ nav {
 @media (max-width: 500px) {
   .logo {
     font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
   }
 
   .nav-links {

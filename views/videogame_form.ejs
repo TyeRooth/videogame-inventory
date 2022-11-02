@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <header>
+      <%- include("./header") %> 
+    </header>
+    <section class="form-section">
+      <h1 class="page-heading"><%= title %></h1>
+      <form method="post" action="">
+        <div class="form-item">
+            <label for="name">Name: </label>
+            <input id="name" class="form-input" type="text" placeholder="Name of Videogame" name="name" required="true" value=<%= undefined===videogame ? '' : videogame.name %> >
+        </div>
+        <div class="form-item">
+            <label for="price">Price ($): </label>
+            <input id="price" class="form-input" type="text" placeholder="9.99" name="price" required="true" 
+            value=<%= undefined===videogame ? '' : videogame.price %> >
+        </div>
+        <div class="form-item">
+            <label for="stock">In Stock: </label>
+            <input id="stock" class="form-input" type="text" placeholder="10" name="stock" required="true"
+            value=<%= undefined===videogame ? '' : videogame.stock %> >
+        </div>
+        <div class="form-item">
+            <label for="ESRB">ESRB Rating: </label>
+            <select id="ESRB" class="form-select" name="ESRB">
+                <option value="E">E</option>
+                <option value="E10+">E10+</option>
+                <option value="T">T</option>
+                <option value="M">M</option>
+            </select>
+        </div>
+        <div class="form-item">
+            <label for="releaseDate">Release Date: </label>
+            <input id="releaseDate" class="form-input" type="date" name="releaseDate" required="true"
+            value=<%= undefined===videogame ? '' : videogame.releaseDate %> >
+        </div>
+        <div class="check-container">
+            <h2 class="check-heading">Select Consoles</h2>
+            <% for (let i = 0; i < consoles.length; i++) { %>
+                <input type="checkbox" id=<%= consoles[i]._id %> name="console" value=<%= consoles[i]._id%>
+                <%= consoles[i].checked ? "checked" : null %> >
+                <label for=<%= consoles[i]._id %>><%= consoles[i].name %></label>
+            <% } %>
+        </div>
+        <div class="check-container">
+            <h2 class="check-heading">Select Genres</h2>
+            <% for (let i = 0; i < genres.length; i++) { %>
+                <input type="checkbox" id=<%= genres[i]._id %> name="genre" value=<%= genres[i]._id %>
+                <%= genres[i].checked ? "checked" : null %> >
+                <label for=<%= genres[i]._id %> ><%= genres[i].name %></label>
+            <% } %>
+        </div>
+        <button class="form-button">Add Videogame</button>
+      </form>
+    </section>
+  </body>
+</html>
