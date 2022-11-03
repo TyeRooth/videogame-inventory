@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <header>
+      <%- include("./header") %> 
+    </header>
+    <section class="form-section">
+      <h1 class="page-heading"><%= title %></h1>
+      <form method="post" action="">
+        <div class="form-item">
+            <label for="name">Name: </label>
+            <input id="name" class="form-input" type="text" placeholder="Name of Console" name="name" required="true" 
+            value=<%= undefined===console ? '' : console.name %> >
+        </div>
+        <div class="form-item">
+            <label for="releaseYear">Release Year: </label>
+            <input id="releaseYear" class="form-input" type="text" placeholder="2000" name="releaseYear" required="true" 
+            value=<%= undefined===console ? '' : console.releaseYear %> >
+        </div>
+        <div class="form-item">
+            <label for="price">Price ($): </label>
+            <input id="price" class="form-input" type="text" placeholder="99.99" name="price" required="true" 
+            value=<%= undefined===console ? '' : console.price %> >
+        </div>
+        <div class="form-item">
+            <label for="stock">In Stock: </label>
+            <input id="stock" class="form-input" type="text" placeholder="10" name="stock" required="true"
+            value=<%= undefined===console ? '' : console.stock %> >
+        </div>
+        <button class="form-button">Add Console</button>
+      </form>
+    </section>
+  </body>
+</html>

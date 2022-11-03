@@ -2,6 +2,7 @@ const Console = require("../models/console");
 const Videogame = require("../models/videogame");
 
 const async = require('async');
+const { body, validationResult } = require('express-validator');
 
 exports.console_list = function(req, res, next) {
     Console.find({}, "name stock").sort({ name: 1 }).exec((err, results) => {
@@ -44,12 +45,44 @@ exports.console_detail = function (req, res, next) {
 };
 
 exports.console_create_get = (req, res) => {
-    res.send("Not Implemented: console create get");
+    res.render("console_form", {
+        title: "Add new Console",
+        console: undefined
+    });
 };
 
-exports.console_create_post = (req, res) => {
-    res.send("Not Implemented: console create post");
-};
+exports.console_create_post = [
+    body("name", "Name is required").trim().isLength({ min: 0 }).escape(),
+    body("releaseYear", "Release Year is required").trim().isLength({ min: 4, max: 4}).escape(),
+    body("price", "Price is required").trim().isFloat({ min: 0 }).escape(),
+    body("stock", "In stock amount is required").trim().isInt({ min: 0 }).escape(),
+    
+    (req, res, next) => {
+        const errors = validationResult(req);
+
+        const console = new Console ({
+            name: req.body.name,
+            releaseYear: req.body.releaseYear,
+            price: req.body.price,
+            stock: req.body.stock,
+        });
+
+        if(!errors.isEmpty()) {
+            res.render("console_form", {
+                title: "Add new Console",
+                console: console
+            });
+            return; 
+        }
+
+        console.save((err) => {
+            if (err) {
+                return next(err);
+            }
+            res.redirect(console.url);
+        });
+    },
+]
 
 exports.console_delete_get = (req, res) => {
     res.send("Not Implemented: console delete get");

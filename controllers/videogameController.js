@@ -4,7 +4,6 @@ const Genre = require('../models/genre');
 
 const async = require('async');
 const { body, validationResult } = require('express-validator');
-const genre = require('../models/genre');
 
 exports.index = function (req, res, next) {
     async.parallel(

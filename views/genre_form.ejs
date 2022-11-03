@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <header>
+      <%- include("./header") %> 
+    </header>
+    <section class="form-section">
+      <h1 class="page-heading"><%= title %></h1>
+      <form method="post" action="">
+        <div class="form-item">
+            <label for="name">Name: </label>
+            <input id="name" class="form-input" type="text" placeholder="Name of Genre" name="name" required="true" 
+            value=<%= undefined===genre ? '' : genre.name %> >
+        </div>
+        <button class="form-button">Add Genre</button>
+      </form>
+    </section>
+  </body>
+</html>
