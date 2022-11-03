@@ -46,7 +46,7 @@ exports.console_detail = function (req, res, next) {
 
 exports.console_create_get = (req, res) => {
     res.render("console_form", {
-        title: "Add new Console",
+        title: "Add Console",
         console: undefined
     });
 };
@@ -69,7 +69,7 @@ exports.console_create_post = [
 
         if(!errors.isEmpty()) {
             res.render("console_form", {
-                title: "Add new Console",
+                title: "Add Console",
                 console: console
             });
             return; 
@@ -93,9 +93,47 @@ exports.console_delete_post = (req, res) => {
 };
 
 exports.console_update_get = (req, res) => {
-    res.send("Not Implemented: console update get");
+    Console.findById(req.params.id).exec((err, console) => {
+        if (err) {
+            return next(err);
+        }
+        res.render("console_form", {
+            title: "Update Console",
+            console: console,
+        });
+    });
 };
 
-exports.console_update_post = (req, res) => {
-    res.send("Not Implemented: console update post");
-};
+exports.console_update_post = [
+    body("name", "Name is required").trim().isLength({ min: 0 }).escape(),
+    body("releaseYear", "Release Year is required").trim().isLength({ min: 4, max: 4}).escape(),
+    body("price", "Price is required").trim().isFloat({ min: 0 }).escape(),
+    body("stock", "In stock amount is required").trim().isInt({ min: 0 }).escape(),
+    
+    (req, res, next) => {
+        const errors = validationResult(req);
+
+        const console = new Console ({
+            name: req.body.name,
+            releaseYear: req.body.releaseYear,
+            price: req.body.price,
+            stock: req.body.stock,
+            _id: req.params.id,
+        });
+
+        if(!errors.isEmpty()) {
+            res.render("console_form", {
+                title: "Update Console",
+                console: console
+            });
+            return; 
+        }
+
+        Console.findByIdAndUpdate(req.params.id, console, {}, ((err, theconsole) => {
+            if (err) {
+                return next(err);
+            }
+            res.redirect(theconsole.url);
+        }));
+    },
+]

@@ -86,9 +86,40 @@ exports.genre_delete_post = (req, res) => {
 };
 
 exports.genre_update_get = (req, res) => {
-    res.send("Not Implemented: genre update get");
+    Genre.findById(req.params.id).exec((err, genre) => {
+        if (err) {
+            return next(err);
+        }
+        res.render("genre_form", {
+            title: "Update Genre",
+            genre: genre,
+        });
+    });
 };
 
-exports.genre_update_post = (req, res) => {
-    res.send("Not Implemented: genre update post");
-};
+exports.genre_update_post = [
+    body("name", "Name is required").trim().isLength({ min: 0 }).escape(),
+    (req, res, next) => {
+        const errors = validationResult(req);
+
+        const genre = new Genre ({
+            name: req.body.name,
+            _id: req.params.id,
+        });
+
+        if (!errors.isEmpty()) {
+            res.render("genre_form", {
+                title: "Add new Genre",
+                genre: genre,
+            });
+            return;
+        }
+
+        Genre.findByIdAndUpdate(req.params.id, genre, {}, ((err, thegenre) => {
+            if (err) {
+                return next(err);
+            }
+            res.redirect(thegenre.url);
+        }));
+    },
+]
