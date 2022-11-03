@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <header>
+      <%- include("./header") %> 
+    </header>
+    <section class="delete-section">
+        <h1 class="page-heading"><%= title %></h1>
+        <% if (videogame_list.length > 0) { %>
+            <p>These videogames need to be deleted before this console can be deleted.</p>
+            <div class="list-container">
+                <% for (let i = 0; i < videogame_list.length; i++) { %>
+                    <a href=<%= videogame_list[i].url %> class="list-detail-link">
+                        <div class="list-item-container shadow">
+                            <p class="list-caption"><%= videogame_list[i].name %> - <%= videogame_list[i].stock %></p>
+                        </div>
+                    </a>
+                <% } %>
+            </div>
+        <% }  else { %>
+            <p>Do you really want to delete this console?</p>
+            <form method="post" action="">
+                <div class="form-item">
+                    <input id="consoleid" type="hidden", name="consoleid", required="true", value=<%= console._id %> >
+                </div>
+                <button class="delete-button">Delete</button>
+                <a href=<%= console.url %> class="cancel-link">
+                    <button class="cancel-delete-button" type="button">Cancel</button>
+                </a>
+            </form>
+        <% } %>
+    </section>
+  </body>
+</html>

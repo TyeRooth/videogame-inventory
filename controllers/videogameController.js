@@ -175,7 +175,7 @@ exports.videogame_delete_get = function (req, res, next) {
 };
 
 exports.videogame_delete_post = function (req, res, next) {
-    Videogame.findByIdAndRemove(req.params.id).exec((err) => {
+    Videogame.findByIdAndRemove(req.body.videogameid).exec((err) => {
         if (err) {
             return next(err);
         }

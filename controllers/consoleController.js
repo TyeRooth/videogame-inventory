@@ -84,12 +84,62 @@ exports.console_create_post = [
     },
 ]
 
-exports.console_delete_get = (req, res) => {
-    res.send("Not Implemented: console delete get");
+exports.console_delete_get = function (req, res, next) {
+    async.parallel(
+        {
+            console(callback) {
+                Console.findById(req.params.id).exec(callback);
+            },
+            console_games(callback) {
+                Videogame.find({ console: req.params.id }).exec(callback);
+            },
+        },
+        (err, results) => {
+            if (err) {
+                return next(err);
+            }
+
+            res.render("console_delete", {
+                title: "Delete console: " + results.console.name,
+                console: results.console,
+                videogame_list: results.console_games,
+            });
+        }
+    );
 };
 
-exports.console_delete_post = (req, res) => {
-    res.send("Not Implemented: console delete post");
+exports.console_delete_post = (req, res, next) => {
+    async.parallel(
+        {
+            console(callback) {
+                Console.findById(req.body.consoleid).exec(callback);
+            },
+            console_games(callback) {
+                Videogame.find({ console: req.body.consoleid }).exec(callback);
+            },
+        },
+        (err, results) => {
+            if (err) {
+                return next(err);
+            }
+
+            if(results.console_games.length > 0) {
+                res.render("console_delete", {
+                    title: "Delete console: " + results.console.name,
+                    console: results.console,
+                    videogame_list: results.console_games,
+                });
+                return;
+            }
+
+            Console.findByIdAndRemove(req.body.consoleid, (err) => {
+                if (err) {
+                    return next(err);
+                }
+                res.redirect("/inventory/consoles")
+            });
+        }
+    );
 };
 
 exports.console_update_get = (req, res) => {
