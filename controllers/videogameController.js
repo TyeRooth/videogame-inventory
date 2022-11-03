@@ -139,7 +139,7 @@ exports.videogame_create_post = [
                     }
                     for (const genre of results.genres) {
                         if (videogame.genre.includes(genre._id)) {
-                            genre.checked = true;
+                            genre.checked = "true";
                         }
                     }
                     res.render("videogame_form", {
@@ -184,9 +184,107 @@ exports.videogame_delete_post = function (req, res, next) {
 };
 
 exports.videogame_update_get = (req, res) => {
-    res.send("Not implemented: videogame update get");
+    async.parallel(
+        {
+            videogame(callback) {
+                Videogame.findById(req.params.id, callback);
+            },
+            consoles(callback) {
+                Console.find(callback);
+            },
+            genres(callback) {
+                Genre.find(callback);
+            },
+        },
+        (err, results) => {
+            if (err) {
+                return next(err);
+            }
+            // Mark genres and consoles as selected
+            for (const console of results.consoles) {
+                if (results.videogame.console.includes(console._id)) {
+                    console.checked= "true";
+                }
+            }
+            for (const genre of results.genres) {
+                if (results.videogame.genre.includes(genre._id)) {
+                    genre.checked = true;
+                }
+            }
+            res.render("videogame_form", {
+                title: "Update Videogame",
+                consoles: results.consoles,
+                genres: results.genres,
+                videogame: results.videogame,
+            });
+        }
+    );
 };
 
-exports.videogame_update_post = (req, res) => {
-    res.send("Not implemented: videogame update post");
-};
+exports.videogame_update_post = [
+    body("name", "Name is required").trim().isLength({ min: 1 }).escape(),
+    body("price", "Price is required").trim().isFloat({ min: 0 }).escape(),
+    body("stock", "In-stock amount is required").trim().isInt({ min: 0 }).escape(),
+    body("ESRB").escape(),
+    body("releaseDate").optional({ checkFalsy: true }).isISO8601().toDate(),
+    body("genre.*").escape(),
+    body("console.*").escape(),
+    
+    (req, res, next) => {
+        const errors = validationResult(req);
+        
+        const videogame = new Videogame({
+            name: req.body.name,
+            price: req.body.price,
+            stock: req.body.stock,
+            ESRB: req.body.ESRB,
+            releaseDate: req.body.releaseDate,
+            genre: req.body.genre,
+            console: req.body.console,
+            _id: req.params.id,
+        });
+
+        if (!errors.isEmpty()) {
+            async.parallel(
+                {
+                    consoles(callback) {
+                        Console.find(callback);
+                    },
+                    genres(callback) {
+                        Genre.find(callback);
+                    },
+                },
+                (err, results) => {
+                    if (err) {
+                        return next(err);
+                    }
+                    // Mark genres and consoles as selected
+                    for (const console of results.consoles) {
+                        if (videogame.console.includes(console._id)) {
+                            console.checked= "true";
+                        }
+                    }
+                    for (const genre of results.genres) {
+                        if (videogame.genre.includes(genre._id)) {
+                            genre.checked = "true";
+                        }
+                    }
+                    res.render("videogame_form", {
+                        title: "Add New Videogame",
+                        consoles: results.consoles,
+                        genres: results.genres,
+                        videogame,
+                        errors: errors.array(),
+                    });
+                }
+            );
+            return;
+        }
+        Videogame.findByIdAndUpdate(req.params.id, videogame, {}, ((err, thevideogame) => {
+            if (err) {
+                return next(err);
+            }
+            res.redirect(thevideogame.url);
+        }));
+    },
+];

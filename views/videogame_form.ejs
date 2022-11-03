@@ -28,16 +28,23 @@
         <div class="form-item">
             <label for="ESRB">ESRB Rating: </label>
             <select id="ESRB" class="form-select" name="ESRB">
-                <option value="E">E</option>
-                <option value="E10+">E10+</option>
-                <option value="T">T</option>
-                <option value="M">M</option>
+                <% if (videogame===undefined) { %>
+                    <option value="E">E</option>
+                    <option value="E10+">E10+</option>
+                    <option value="T">T</option>
+                    <option value="M">M</option>
+                <% }  else { %>
+                    <option <%= videogame.ESRB==="E" ? "selected" : '' %> value="E">E</option>
+                    <option <%= videogame.ESRB==="E10+" ? "selected" : '' %> value="E10+">E10+</option>
+                    <option <%= videogame.ESRB==="T" ? "selected" : '' %> value="T">T</option>
+                    <option <%= videogame.ESRB==="M" ? "selected" : '' %> value="M">M</option>
+                <% } %>
             </select>
         </div>
         <div class="form-item">
             <label for="releaseDate">Release Date: </label>
             <input id="releaseDate" class="form-input" type="date" name="releaseDate" required="true"
-            value=<%= undefined===videogame ? '' : videogame.releaseDate %> >
+            value=<%= undefined===videogame ? '' : videogame.release_date_form %> >
         </div>
         <div class="check-container">
             <h2 class="check-heading">Select Consoles</h2>
@@ -55,7 +62,7 @@
                 <label for=<%= genres[i]._id %> ><%= genres[i].name %></label>
             <% } %>
         </div>
-        <button class="form-button">Add Videogame</button>
+        <button class="form-button"><%= title %></button>
       </form>
     </section>
   </body>
